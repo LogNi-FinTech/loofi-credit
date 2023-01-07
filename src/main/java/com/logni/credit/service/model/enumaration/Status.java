@@ -4,5 +4,6 @@ public enum Status {
   PAID,
   PARTIAL_PAID,
   UNPAID,
-  DEFAULT
+  DEFAULT,
+  PENDING
 }

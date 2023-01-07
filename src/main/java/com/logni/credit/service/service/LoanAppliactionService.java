@@ -3,7 +3,7 @@ package com.logni.credit.service.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.logni.credit.service.exceptions.CommonException;
+import com.logni.credit.service.exceptions.LoofiBusinessRunTimeException;
 import com.logni.credit.service.model.DocumentFile;
 import com.logni.credit.service.model.LoanApplication;
 import com.logni.credit.service.model.LoanDocument;
@@ -46,8 +46,8 @@ public class LoanAppliactionService {
                 loanDocument(loanDocument).
                 name(loanApplicationRequest.getName()).
                 period(loanApplicationRequest.getPeriod()).
-                status(Status.DEFAULT).
-                userId(loanApplicationRequest.getUserId()).build();
+                status(Status.PENDING).
+                customerId(loanApplicationRequest.getCustomerId()).build();
         return loanApplicationRepository.save(loanApplication);
     }
 
@@ -57,14 +57,16 @@ public class LoanAppliactionService {
                 name(loanApplicationObject.getName()).description(loanApplicationObject.getDescription()).build();
         loanDocumentSaved = loanDocumentRepository.save(loanDocument);
 
-        for (MultipartFile loanDocumentFile : loanDocuments) {
-            fileName = FileUtil.saveFile(uploadFolder, loanDocumentFile);
-            //fileName = "111";
-            DocumentFile documentFile = DocumentFile.builder().
-                    fileName(fileName).
-                    fileUrl("url").
-                    loanDocument(loanDocumentSaved).build();
-            documentFileRepository.save(documentFile);
+        if(loanDocuments != null && loanDocuments.length > 0) {
+            for (MultipartFile loanDocumentFile : loanDocuments) {
+                fileName = FileUtil.saveFile(uploadFolder, loanDocumentFile);
+                //fileName = "111";
+                DocumentFile documentFile = DocumentFile.builder().
+                        fileName(fileName).
+                        fileUrl("url").
+                        loanDocument(loanDocumentSaved).build();
+                documentFileRepository.save(documentFile);
+            }
         }
         return loanDocumentSaved;
     }
@@ -76,12 +78,12 @@ public class LoanAppliactionService {
                     loanProduct.get().getMaxAmount().compareTo(loanApplicationRequest.getLoanAmount()) >= 0 &&
                     loanProduct.get().getMinPeriod() <= loanApplicationRequest.getPeriod() &&
                     loanProduct.get().getMaxPeriod() >= loanApplicationRequest.getPeriod())) {
-                throw new CommonException(
+                throw new LoofiBusinessRunTimeException(
                         CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT_SERVICE, CreditErrors.LOAN_APPLICATION_REQUEST_NOT_VALID),
                         CreditErrors.ERROR_MAP.get(CreditErrors.LOAN_APPLICATION_REQUEST_NOT_VALID));
             }
         } else
-            throw new CommonException(
+            throw new LoofiBusinessRunTimeException(
                     CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT_SERVICE, CreditErrors.LOAN_PRODUCT_NOT_FOUND),
                     CreditErrors.ERROR_MAP.get(CreditErrors.LOAN_PRODUCT_NOT_FOUND));
     }

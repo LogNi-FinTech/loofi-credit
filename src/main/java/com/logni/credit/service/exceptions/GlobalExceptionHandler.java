@@ -46,11 +46,18 @@ public class GlobalExceptionHandler {
     }
     */
 
-    @ExceptionHandler({CommonException.class})
-    public final ResponseEntity<ErrorResponse> handleAPIERRORExceptions(CommonException ex) {
+    @ExceptionHandler({LoofiBusinessRunTimeException.class})
+    public final ResponseEntity<ErrorResponse> handleAPIERRORExceptions(LoofiBusinessRunTimeException ex) {
         log.error("API Exception",ex);
         ErrorResponse error = new ErrorResponse(ex.getCode(), ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler({LoofiRunTimeException.class})
+    public final ResponseEntity<ErrorResponse> handleEnternalServerxceptions(LoofiRunTimeException ex) {
+        log.error("API Exception",ex);
+        ErrorResponse error = new ErrorResponse(ex.getCode(), ex.getMessage());
+        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
 
@@ -61,8 +68,4 @@ public class GlobalExceptionHandler {
         		CreditErrors.INTERNAL_ERROR, ex.getMessage());
         return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
-
-
-
-
 }

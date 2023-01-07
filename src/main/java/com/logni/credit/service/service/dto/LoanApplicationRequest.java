@@ -16,7 +16,7 @@ public class LoanApplicationRequest {
 
     Integer loanProductId;
 
-    Integer userId;
+    Integer customerId;
 
     Integer period;
 

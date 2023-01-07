@@ -1,6 +1,6 @@
 package com.logni.credit.service.service;
 
-import com.logni.credit.service.exceptions.CommonException;
+import com.logni.credit.service.exceptions.LoofiBusinessRunTimeException;
 import com.logni.credit.service.model.LoanRepayment;
 import com.logni.credit.service.repository.LoanRepaymentRepository;
 import com.logni.credit.service.utilis.constants.CreditErrors;
@@ -23,7 +23,7 @@ public class LoanRepaymentService {
          loanRepayment.get().setPaidAmount(loanRepaymentReceived.getPaidAmount());
          return loanRepaymentRepository.save(loanRepayment.get());
       }
-      throw new CommonException(CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT_SERVICE, CreditErrors.LOAN_REPAYMENT_NOT_FOUND),
+      throw new LoofiBusinessRunTimeException(CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT_SERVICE, CreditErrors.LOAN_REPAYMENT_NOT_FOUND),
             CreditErrors.ERROR_MAP.get(CreditErrors.LOAN_REPAYMENT_NOT_FOUND));
    }
 

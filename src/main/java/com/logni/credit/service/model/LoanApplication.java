@@ -39,7 +39,7 @@ public class LoanApplication {
 	private Status status;
 	
 	@Positive
-	Integer userId;
+	Integer customerId;
 	
 	@Positive
 	Integer period;

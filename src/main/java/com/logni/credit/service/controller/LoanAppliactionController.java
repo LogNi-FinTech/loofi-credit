@@ -39,7 +39,8 @@ public class LoanAppliactionController {
 
    @PostMapping()
    ResponseEntity<LoanApplication> requestForLoan(@RequestParam("application-object") String loanApplicationObject,
-         @RequestParam("document") MultipartFile[] loanDocument) throws JsonParseException, JsonMappingException, IOException {
+                                                  @RequestParam(value = "document", required = false) MultipartFile[]  loanDocument
+         ) throws JsonParseException, JsonMappingException, IOException {
       LoanApplication loanApplication = loanAppliactionService.requestForLoan(loanApplicationObject, loanDocument);
       if (loanApplication != null) {
          return ResponseEntity.status(HttpStatus.CREATED).body(loanApplication);

@@ -1,8 +1,10 @@
 package com.logni.credit.service.model;
 
+import com.logni.credit.service.model.enumaration.LoanFeeType;
 import com.vladmihalcea.hibernate.type.basic.PostgreSQLEnumType;
 import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
 import lombok.*;
+import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
 import org.hibernate.annotations.TypeDefs;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -34,6 +36,9 @@ public class LoanProduct extends Auditable<String> {
    @Positive BigDecimal interestRate;
 
    @Positive BigDecimal loanFee;
+   @Enumerated(EnumType.STRING)
+   @Type(type = "pgsql_enum")
+   @Positive LoanFeeType loanFeeType;
 
    @Positive BigDecimal maxAmount;
 

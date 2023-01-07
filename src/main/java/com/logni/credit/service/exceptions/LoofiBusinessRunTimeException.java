@@ -6,9 +6,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CommonException extends RuntimeException {
+public class LoofiBusinessRunTimeException extends RuntimeException {
     private String code;
-    public CommonException(String code, String msg) {
+    public LoofiBusinessRunTimeException(String code, String msg) {
         super(msg);
         this.code = code;
     }
