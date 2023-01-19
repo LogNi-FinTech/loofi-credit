@@ -2,7 +2,9 @@ package com.logni.credit.service.model.enumaration;
 
 public enum LoanStatus {
 	PENDING,
-	APPROVED,
+	APPROVED, //(active)
 	REJECT,
-	FROZEN
+	FROZEN,
+	CLOSED,
+	NPL //Non performing loan
 }

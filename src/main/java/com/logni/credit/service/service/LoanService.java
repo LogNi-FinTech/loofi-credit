@@ -28,6 +28,9 @@ public class LoanService {
 
    public Loan createLoan(Loan loanReceived) {
       loanReceived.setLoanStatus(LoanStatus.PENDING);
+      loanReceived.setUnpaidInterestAmount(loanReceived.getInterestAmount());
+      loanReceived.setUnpaidPrincipleAmount(loanReceived.getPrincipleAmount());
+      loanReceived.setLoanStatus(LoanStatus.PENDING);
       Loan loan = loanRepository.save(loanReceived);
 
       BigDecimal installmentPaymentPrincipleAmount, installmentPaymentInterestAmount, totalAmount;

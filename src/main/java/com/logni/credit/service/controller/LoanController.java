@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController()
-@RequestMapping("/api")
+@RequestMapping("/api/loan")
 @Slf4j
 public class LoanController {
 
@@ -30,7 +30,7 @@ public class LoanController {
    @Autowired
    private LoanService loanService;
 
-   @PostMapping("/create")
+   @PostMapping()
    ResponseEntity<Loan> createLoan(@Valid @RequestBody Loan loanReceived) {
       log.info(loanReceived.toString());
       Loan loan = loanService.createLoan(loanReceived);
@@ -58,12 +58,12 @@ public class LoanController {
 
    // todo update loan status
 
-   @GetMapping("/loan")
+   @GetMapping()
    public ResponseEntity<List<Loan>> fetchAllLoan() {
       return ResponseEntity.ok().body(loanRepository.findAll());
    }
 
-   @GetMapping("/loan/{id}")
+   @GetMapping("/{id}")
    public ResponseEntity<Loan> fetchLoanById(@PathVariable(value = "id") int loanId) {
       Optional<Loan> loanCreate = loanRepository.findById(loanId);
       return ResponseEntity.ok().body(loanCreate.get());

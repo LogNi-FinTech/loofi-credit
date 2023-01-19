@@ -57,4 +57,8 @@ public class LoanRepayment extends Auditable<String> {
 
    BigDecimal paidAmount;
 
+   BigDecimal paidPrincipleAmount;
+
+   BigDecimal paidInterestAmount;
+
 }
