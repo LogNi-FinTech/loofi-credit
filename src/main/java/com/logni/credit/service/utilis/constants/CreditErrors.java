@@ -18,6 +18,7 @@ public class CreditErrors {
     public static final String INVALID_INPUT = "004";
     public static final String INTERNAL_ERROR = "005";
     public static final String LOAN_REPAYMENT_NOT_FOUND = "006";
+    public static final String LOAN_REPAYMENT_VALUE_INVALID = "007";
     
 
 
@@ -31,6 +32,7 @@ public class CreditErrors {
         ERROR_MAP.put(INVALID_INPUT, "Invalid Input.");
         ERROR_MAP.put(LOAN_APPLICATION_REQUEST_NOT_VALID, "Loan Application Request Not Valid");
         ERROR_MAP.put(INTERNAL_ERROR, "Something went wrong.");
+        ERROR_MAP.put(LOAN_REPAYMENT_VALUE_INVALID, "Loan Repayment Value is not valid");
 
     }
 

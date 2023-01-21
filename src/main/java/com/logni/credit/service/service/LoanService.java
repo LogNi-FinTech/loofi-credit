@@ -27,7 +27,6 @@ public class LoanService {
    private LoanRepaymentRepository loanRepaymentRepository;
 
    public Loan createLoan(Loan loanReceived) {
-      loanReceived.setLoanStatus(LoanStatus.PENDING);
       loanReceived.setUnpaidInterestAmount(loanReceived.getInterestAmount());
       loanReceived.setUnpaidPrincipleAmount(loanReceived.getPrincipleAmount());
       loanReceived.setLoanStatus(LoanStatus.PENDING);
@@ -35,11 +34,11 @@ public class LoanService {
 
       BigDecimal installmentPaymentPrincipleAmount, installmentPaymentInterestAmount, totalAmount;
       installmentPaymentPrincipleAmount = loan
-            .getInterestAmount()
+            .getPrincipleAmount()
             .divide(new BigDecimal(String.valueOf(loan.getNoOfInstallment())), 6, RoundingMode.HALF_EVEN);
       ;
       installmentPaymentInterestAmount = loan
-            .getPrincipleAmount()
+            .getInterestAmount()
             .divide(new BigDecimal(String.valueOf(loan.getNoOfInstallment())), 6, RoundingMode.HALF_EVEN);
       ;
       totalAmount = installmentPaymentPrincipleAmount.add(installmentPaymentInterestAmount);
@@ -48,7 +47,9 @@ public class LoanService {
          LoanRepayment loanRepayment = LoanRepayment
                .builder()
                .principleAmount(installmentPaymentPrincipleAmount)
+               .unPaidPrincipleAmount(installmentPaymentPrincipleAmount)
                .interestAmount(installmentPaymentInterestAmount)
+               .unPaidInterestAmount(installmentPaymentInterestAmount)
                .totalAmount(totalAmount)
                .paidAmount(null)
                .status(Status.UNPAID)
