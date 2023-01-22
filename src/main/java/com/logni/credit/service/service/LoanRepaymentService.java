@@ -31,7 +31,7 @@ public class LoanRepaymentService {
               return partialPayment(loanRepaymentReceived, loanRepayment.get());
           }
           else {
-              return fullPayment(loanRepayment.get());
+              return fullPayment(loanRepaymentReceived, loanRepayment.get());
           }
       }
       throw new LoofiBusinessRunTimeException(CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT_SERVICE, CreditErrors.LOAN_REPAYMENT_NOT_FOUND),
@@ -57,15 +57,18 @@ public class LoanRepaymentService {
            }
            loanRepayment.setTxnId(loanRepaymentReceived.getTxnId());
            loanRepayment.setTxnNote(loanRepaymentReceived.getTxnNote());
-           System.out.println(loanRepayment.getTxnId());
            return loanRepaymentRepository.save(loanRepayment);
        }
         throw new LoofiBusinessRunTimeException(CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT_SERVICE, CreditErrors.LOAN_REPAYMENT_VALUE_INVALID),
                 CreditErrors.ERROR_MAP.get(CreditErrors.LOAN_REPAYMENT_VALUE_INVALID));
    }
 
-    LoanRepayment fullPayment(LoanRepayment loanRepayment){
+    LoanRepayment fullPayment(LoanRepayment loanRepaymentReceived, LoanRepayment loanRepayment){
         loanRepayment.setStatus(Status.PAID);
+        loanRepayment.setTxnId(loanRepaymentReceived.getTxnId());
+        loanRepayment.setTxnNote(loanRepaymentReceived.getTxnNote());
+        loanRepayment.setUnPaidInterestAmount(BigDecimal.valueOf(0));
+        loanRepayment.setUnPaidPrincipleAmount(BigDecimal.valueOf(0));
         Loan loan = loanRepayment.getLoan();
         loan.setUnpaidPrincipleAmount(loan.getUnpaidPrincipleAmount().subtract(loanRepayment.getPrincipleAmount()));
         loan.setUnpaidInterestAmount(loan.getUnpaidInterestAmount().subtract(loanRepayment.getInterestAmount()));
