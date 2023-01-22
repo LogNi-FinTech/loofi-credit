@@ -39,7 +39,7 @@ public class LoanAppliactionService {
         LoanApplicationRequest loanApplicationRequest = new ObjectMapper().readValue(loanApplicationObject, LoanApplicationRequest.class);
         validate(loanApplicationRequest);
         LoanDocument loanDocument = createLoanDocument(loanApplicationRequest, loanDocuments);
-
+        Optional<LoanProduct> loanProduct =  loanProductRepository.findById(loanApplicationRequest.getLoanProductId());
         LoanApplication loanApplication = LoanApplication.builder().
                 description(loanApplicationRequest.getDescription()).
                 loanAmount(loanApplicationRequest.getLoanAmount()).
@@ -47,6 +47,7 @@ public class LoanAppliactionService {
                 name(loanApplicationRequest.getName()).
                 period(loanApplicationRequest.getPeriod()).
                 status(Status.PENDING).
+                loanProduct(loanProduct.get()).
                 customerId(loanApplicationRequest.getCustomerId()).build();
         return loanApplicationRepository.save(loanApplication);
     }

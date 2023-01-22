@@ -33,6 +33,9 @@ public class LoanApplication {
 	
 	@ManyToOne()
 	private LoanDocument loanDocument;
+
+	@ManyToOne()
+	private LoanProduct loanProduct;
 	
 	@Enumerated(EnumType.STRING)
 	@Type(type = "pgsql_enum")
