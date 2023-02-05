@@ -21,7 +21,7 @@ public class LoanProductController {
 	private LoanProductRepository loanProductRepository;
 
 	@SuppressWarnings("unchecked")
-	@PostMapping()
+	@PostMapping
 	ResponseEntity<LoanProduct> createLoanProduct(@RequestBody LoanProduct loanProductReceived){
 		LoanProduct loanProduct = loanProductRepository.save(loanProductReceived);
 		if (loanProduct != null) {
@@ -31,7 +31,7 @@ public class LoanProductController {
 		}
 	}
 
-	@GetMapping()
+	@GetMapping
 	public ResponseEntity<List<LoanProduct>> fetchAllLoanProduct() {
 		return ResponseEntity.ok().body(loanProductRepository.findAll());
 	}

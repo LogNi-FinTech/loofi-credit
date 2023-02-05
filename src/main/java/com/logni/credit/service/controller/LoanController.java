@@ -30,7 +30,7 @@ public class LoanController {
    @Autowired
    private LoanService loanService;
 
-   @PostMapping()
+   @PostMapping
    ResponseEntity<Loan> createLoan(@Valid @RequestBody Loan loanReceived) {
       log.info(loanReceived.toString());
       Loan loan = loanService.createLoan(loanReceived);

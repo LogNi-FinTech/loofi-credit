@@ -37,7 +37,7 @@ public class LoanAppliactionController {
    @Autowired
    private FileStorageService fileStorageService;
 
-   @PostMapping()
+   @PostMapping
    ResponseEntity<LoanApplication> requestForLoan(@RequestParam("application-object") String loanApplicationObject,
                                                   @RequestParam(value = "document", required = false) MultipartFile[]  loanDocument
          ) throws JsonParseException, JsonMappingException, IOException {
@@ -49,7 +49,7 @@ public class LoanAppliactionController {
       }
    }
 
-   @GetMapping()
+   @GetMapping
    public ResponseEntity<List<LoanApplication>> fetchAllLoanApplication() {
       return ResponseEntity.ok().body(loanApplicationRepository.findAll());
    }
