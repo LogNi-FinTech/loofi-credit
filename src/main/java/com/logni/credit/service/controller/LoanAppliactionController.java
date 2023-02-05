@@ -61,6 +61,7 @@ public class LoanAppliactionController {
       try {
          contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
       } catch (IOException ex) {
+         log.info(ex.toString());
       }
       if (contentType == null) {
          contentType = "application/octet-stream";

@@ -20,7 +20,6 @@ public class LoanProductController {
 	@Autowired
 	private LoanProductRepository loanProductRepository;
 
-	@SuppressWarnings("unchecked")
 	@PostMapping
 	ResponseEntity<LoanProduct> createLoanProduct(@RequestBody LoanProduct loanProductReceived){
 		LoanProduct loanProduct = loanProductRepository.save(loanProductReceived);
@@ -48,12 +47,7 @@ public class LoanProductController {
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteLoanProductId(@PathVariable(value = "id") int loanProductId) {
-		boolean exist = loanProductRepository.existsById(loanProductId);
-		if (exist) {
-			loanProductRepository.deleteById(loanProductId);
-			return ResponseEntity.status(HttpStatus.ACCEPTED).body("resource deleted successfully");
-		} else {
-			return ResponseEntity.notFound().build();
-		}
+		loanProductRepository.findById(loanProductId).ifPresent(loanProductRepository::delete);
+		return ResponseEntity.status(HttpStatus.ACCEPTED).body("resource deleted successfully");
 	}
 }

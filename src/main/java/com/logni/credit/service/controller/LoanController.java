@@ -43,12 +43,12 @@ public class LoanController {
 
    @PostMapping("/approved")
    ResponseEntity<String> updateLoan(@RequestBody LoanApproved loanReceived) {
-      Optional<Loan> loanCreate = loanRepository.findById(loanReceived.getLoanId());
-      if (loanCreate.isPresent()) {
-         if (loanCreate.get().getLoanStatus().toString().equals("PENDING")) {
-            loanCreate.get().setApprovedBy(loanReceived.getApprovedBy());
-            loanCreate.get().setLoanStatus(loanReceived.getLoanStatus());
-            loanRepository.save(loanCreate.get());
+      Optional<Loan> createLoan = loanRepository.findById(loanReceived.getLoanId());
+      if (createLoan.isPresent()) {
+         if (createLoan.get().getLoanStatus().toString().equals("PENDING")) {
+            createLoan.get().setApprovedBy(loanReceived.getApprovedBy());
+            createLoan.get().setLoanStatus(loanReceived.getLoanStatus());
+            loanRepository.save(createLoan.get());
             return ResponseEntity.status(HttpStatus.CREATED).body("Successfully Updated");
          }
          return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Loan Is Rejected");
@@ -56,9 +56,7 @@ public class LoanController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Loan Not Found");
    }
 
-   // todo update loan status
-
-   @GetMapping()
+   @GetMapping
    public ResponseEntity<List<Loan>> fetchAllLoan() {
       return ResponseEntity.ok().body(loanRepository.findAll());
    }
@@ -68,5 +66,4 @@ public class LoanController {
       Optional<Loan> loanCreate = loanRepository.findById(loanId);
       return ResponseEntity.ok().body(loanCreate.get());
    }
-
 }

@@ -2,7 +2,6 @@ package com.logni.credit.service.service;
 
 import com.logni.credit.service.model.Loan;
 import com.logni.credit.service.model.LoanRepayment;
-import com.logni.credit.service.model.enumaration.LoanStatus;
 import com.logni.credit.service.model.enumaration.Status;
 import com.logni.credit.service.repository.LoanRepaymentRepository;
 import com.logni.credit.service.repository.LoanRepository;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 @Service
 @Slf4j

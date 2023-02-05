@@ -1,5 +1,7 @@
 package com.logni.credit.service.service;
 
+import com.logni.credit.service.exceptions.LoofiRunTimeException;
+import com.logni.credit.service.utilis.constants.CreditErrors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -8,7 +10,6 @@ import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 
 import java.net.MalformedURLException;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -24,8 +25,9 @@ public class FileStorageService {
         try {
             // Files.createDirectories(this.fileStorageLocation);
         } catch (Exception ex) {
-            throw new RuntimeException(
-                    "Could not create the directory where the uploaded files will be stored.", ex);
+            throw new LoofiRunTimeException(
+                    CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT, CreditErrors.FAILED_TO_CREATE_DIRECTORY),
+                    CreditErrors.ERROR_MAP.get(CreditErrors.FAILED_TO_CREATE_DIRECTORY));
         }
     }
 
@@ -38,10 +40,14 @@ public class FileStorageService {
             if (resource.exists()) {
                 return resource;
             } else {
-                throw new RuntimeException("File not found " + fileName);
+                throw new LoofiRunTimeException(
+                        CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT, CreditErrors.FILE_NOT_FOUND),
+                        CreditErrors.ERROR_MAP.get(CreditErrors.FILE_NOT_FOUND));
             }
         } catch (MalformedURLException ex) {
-            throw new RuntimeException("File not found " + fileName, ex);
+            throw new LoofiRunTimeException(
+                    CreditErrors.getErrorCode(CreditErrors.LOGNI_CREDIT, CreditErrors.FILE_NOT_FOUND),
+                    CreditErrors.ERROR_MAP.get(CreditErrors.FILE_NOT_FOUND));
         }
     }
 }

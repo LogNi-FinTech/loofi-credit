@@ -23,7 +23,6 @@ public class LoanRepaymentController {
    @PostMapping("/payment")
    ResponseEntity<LoanRepayment> loanPayment(@RequestBody LoanRepayment loanRepaymentReceived) {
       LoanRepayment loanRepayment = loanRepaymentService.loanPayment(loanRepaymentReceived);
-      //todo  when all installment done update main loan status
       if (loanRepayment != null) {
          return ResponseEntity.status(HttpStatus.CREATED).body(loanRepayment);
       } else {
@@ -40,6 +39,4 @@ public class LoanRepaymentController {
          return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
       }
    }
-
-   // todo partial repayment
 }
