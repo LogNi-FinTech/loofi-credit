@@ -47,7 +47,7 @@ Contribution Notes/Features:
 
 # Contact:
 - Join LinkedIn Group:
-    - https://www.linkedin.com/company/90690030
+    - https://www.linkedin.com/groups/14134418/
 - Email: lognifintech@gmail.com
 
 
