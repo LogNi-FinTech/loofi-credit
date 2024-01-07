@@ -9,7 +9,8 @@ LooFi credit service is to manage credit/loan for any fintech, Bank, MFI.
 - Loan document manaement
 - Handle Repayment 
 - Reschedule & restructring
-- Limit management 
+- Limit management
+- BNPL (Flexible Payment Plan)
 # Advance
 - Non performing Assets/Loan (NPL)
 - Day Past Due/ Overdue
